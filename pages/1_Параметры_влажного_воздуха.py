@@ -70,20 +70,20 @@ def update_rh_d_params():
         st.session_state.rh_d_format = "%0.4f"
         st.session_state.rh_d_step = .01
 
-width: int = 310
-cols_size = [4, 5]
+WIDTH: int = 310
+COLS_SIZE = [4, 5]
 # Заголовок страницы
 st.title("Расчёт параметров влажного воздуха")
 st.markdown("Диапазон допустимых температур от -100 °С до +200 °С.")
 
 # Создаем контейнер с колонками
-col1, col2  = st.columns(cols_size, vertical_alignment="center", width = width)
+col1, col2  = st.columns(COLS_SIZE, vertical_alignment="center", width = WIDTH)
 with col1:  
     st.write("t, °С")
 with col2:
     t = st.number_input("Температура", value=20., step=1., min_value=-100., max_value=200., key ="t", label_visibility="collapsed")
 
-col1, col2  = st.columns(cols_size, vertical_alignment="center", width = width)
+col1, col2  = st.columns(COLS_SIZE, vertical_alignment="center", width = WIDTH)
 with col1:  
     RH_d_sel = st.selectbox(
         "Параметр влажности",
@@ -105,7 +105,7 @@ with col2:
         key="RH_d"
         )
 
-col1, col2  = st.columns(cols_size, vertical_alignment="center", width = width)
+col1, col2  = st.columns(COLS_SIZE, vertical_alignment="center", width = WIDTH)
 with col1:  
     st.write("p, Па")
 with col2:

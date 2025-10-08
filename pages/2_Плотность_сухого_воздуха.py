@@ -8,10 +8,10 @@ st.set_page_config(
 )
 # Заголовок страницы
 st.title("Расчёт плотности сухого воздуха")
-st.markdown("Определение плотности сухого воздуха для t = [-100; 1000] С,  p = [0,1; 20] МПа")
+st.markdown("Определение плотности сухого воздуха для t = [-100; 1000] °С,  p = [0,1; 20] МПа")
 
-t = st.number_input("Температура, °С", value=20., step=1., min_value=-100., max_value=1000., key ="t", width = 200)
-p = st.number_input("Давление, Па", value=101325.0, step=1., min_value=100000., max_value=20e6, key ="p", width = 200)
+t: float = st.number_input("Температура, °С", value=20., step=1., min_value=-100., max_value=1000., key ="t", width = 200)
+p: float = st.number_input("Давление, Па", value=101325.0, step=1., min_value=100000., max_value=20e6, key ="p", width = 200)
 if st.button("Рассчитать"):
     try:
         res = calc_dryair_dens(t, p)
@@ -23,6 +23,6 @@ if st.button("Рассчитать"):
         st.error(f"{str(e)}", icon="⚠️")
 
 with st.expander("Дополнительно"):
-    st.markdown("[Плотность сухого воздуха](https://dzen.ru/a/XzUUMppesQVXBAwF)")
+    st.markdown("[Модуль для расчёта плотности сухого воздуха](https://dzen.ru/a/XzUUMppesQVXBAwF)")
 
 show_footer()
