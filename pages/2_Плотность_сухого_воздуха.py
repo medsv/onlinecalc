@@ -23,6 +23,8 @@ if st.button("Рассчитать"):
         st.error(f"{str(e)}", icon="⚠️")
 
 with st.expander("Дополнительно"):
-    st.markdown("[Модуль для расчёта плотности сухого воздуха](https://dzen.ru/a/XzUUMppesQVXBAwF)")
+    st.markdown("[Статья](https://dzen.ru/a/XzUUMppesQVXBAwF) Модуль для расчёта плотности сухого воздуха")
+    st.markdown("[Таблица](https://medsv.github.io/dzen/0001/Плотность_сухого_воздуха.html) Зависимость плотности сухого воздуха от его температуры " \
+    "при различных значениях абсолютного давления")
 
 show_footer()

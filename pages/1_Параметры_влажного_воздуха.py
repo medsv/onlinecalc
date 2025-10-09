@@ -152,5 +152,5 @@ if st.button("Рассчитать"):
         #st.markdown(f":orange-badge[⚠️ {str(e)}]")
         st.error(f"{str(e)}", icon="⚠️")
 with st.expander("Дополнительно"):
-    st.markdown("[Модуль для расчёта свойств влажного воздуха](https://dzen.ru/a/Yt0vpHeCWWlWEfPq)")
+    st.markdown("[Статья](https://dzen.ru/a/Yt0vpHeCWWlWEfPq) Модуль для расчёта свойств влажного воздуха")
 show_footer()
