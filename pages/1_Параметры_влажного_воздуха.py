@@ -1,7 +1,7 @@
 import streamlit as st
 from libs.wetairprops import calc_d, calc_t_wb, calc_t_dp_d, calc_dens, calc_p_s, calc_I, calc_RH_d
-import pandas as pd
 from common.footer import show_footer
+from common.print_result import print_result
 
 st.set_page_config(
     page_title="Расчёт параметров влажного воздуха",
@@ -142,12 +142,9 @@ if st.button("Рассчитать"):
                 key_mapping[old_key] = description[0].upper() + description[1:]
 
         # Создаем новый словарь
-        new_d = {key_mapping.get(old_key, old_key): value for old_key, value in result.items()}      
+        data = {key_mapping.get(old_key, old_key): value for old_key, value in result.items()}      
+        print_result(data)
 
-        df = pd.DataFrame(list(new_d.items()), columns=['Параметр', 'Значение'])
-        df['Значение'] = df['Значение'].apply(lambda x: str(x).replace('.', ','))
-        #st.table(df)
-        st.dataframe(df, hide_index=True)
     except Exception as e:
         #st.markdown(f":orange-badge[⚠️ {str(e)}]")
         st.error(f"{str(e)}", icon="⚠️")
