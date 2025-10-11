@@ -12,7 +12,7 @@ __copyright__ = "Sergey Medvedev, 2020"
 __license__ = "GPL"
 __version__ = "1.0"
 __maintainer__ = "Sergey Medvedev"
-__email__ = "medsv@yandex.ru"
+__email__ = "engpython@yandex.ru"
 __status__ = "Production"
 
 b = [np.array([0.366812, -0.252712, -0.284986e1, 0.360179e1, -0.318665e1, 0.154029e1, -0.260953, -0.391073e-1]),

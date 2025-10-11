@@ -11,7 +11,7 @@ __copyright__ = "Sergey Medvedev, 2020"
 __license__ = "GPL"
 __version__ = "1.0"
 __maintainer__ = "Sergey Medvedev"
-__email__ = "medsv@yandex.ru"
+__email__ = "engpython@yandex.ru"
 __status__ = "Production"
 
 import numpy as np
