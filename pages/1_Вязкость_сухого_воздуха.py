@@ -1,7 +1,6 @@
 import streamlit as st
 #from libs.calcdryairdens import calc_dryair_dens
 from libs.calcdryairvisc import calc_dryair_visc
-from common.footer import show_footer
 from common.print_result import print_result
 st.set_page_config(
     page_title="Расчёт вязкости сухого воздуха",
@@ -13,7 +12,7 @@ st.title("Расчёт вязкости сухого воздуха")
 st.markdown("Определение вязкости сухого воздуха при t = [-100; 1000] °С,  p = [0,1; 20] МПа")
 
 t: float = st.number_input("Температура, °С", value=20., step=1., min_value=-100., max_value=1000., key ="t", width = 200)
-p: float = st.number_input("Давление, Па", value=101325.0, step=1., min_value=100000., max_value=20e6, key ="p", width = 200)
+p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=100000., max_value=20e6, key ="p", width = 200)
 if st.button("Рассчитать"):
     try:
         dvisc,  dens = calc_dryair_visc(t, p)
@@ -33,4 +32,3 @@ with st.expander("Дополнительно"):
     "вязкости сухого воздуха от его температуры при различных значениях абсолютного давления")
     st.markdown("[Таблица](https://medsv.github.io/dzen/0002/Кинематическая_вязкость_сухого_воздуха.html) Зависимость кинематической " \
     "вязкости сухого воздуха от его температуры при различных значениях абсолютного давления")
-show_footer()

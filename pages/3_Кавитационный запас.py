@@ -1,6 +1,5 @@
 import streamlit as st
 from libs.wsprops.region1 import Region1
-from common.footer import show_footer
 from common.print_result import print_result
 
 st.set_page_config(
@@ -18,7 +17,7 @@ with st.expander("Схема"):
     "H - подпор, разница отметок поверхности воды и оси вала насоса (может принимать отрицательные значения), м;\n\n" \
         "dH - потери давления (напора) в подводящем трубопроводе, м.")
 
-p: float = st.number_input("Давление, Па", value=101325.0, step=1., min_value=611.213, max_value=100e6, key ="p", width = 200)
+p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=611.213, max_value=100e6, key ="p", width = 200)
 t: float = st.number_input("Температура, °С", value=20., step=1., min_value=0., max_value= 623.15-273.15, key ="t", width = 200)
 H: float = st.number_input("Подпор, м", value=0., step=1., min_value=-1000., max_value=1000., key ="H", width = 200)
 dH: float = st.number_input("Потери давления (напора), м", value=0., step=1., min_value=0., max_value=1000., key ="dH", width = 200)
@@ -45,4 +44,3 @@ if st.button("Рассчитать"):
 with st.expander("Дополнительно"):
     st.markdown("[Статья](https://dzen.ru/a/X8Nt8mPVdAQVSm6Z) Расчёт кавитационного запаса")
     st.markdown("[Статья](https://dzen.ru/a/YuQlMIkoykP0rEHz) Способ быстрой оценки кавитационного запаса насоса")
-show_footer()

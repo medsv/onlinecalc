@@ -1,5 +1,4 @@
 import streamlit as st
-from common.footer import show_footer
 
 # Настройка страницы
 st.set_page_config(
@@ -32,5 +31,3 @@ st.markdown("""
 
 st.markdown("Блог \"Инженерные расчёты на Python\" на Дзен: [https://dzen.ru/id/5f33dcd5554adc5b33aaee83](https://dzen.ru/id/5f33dcd5554adc5b33aaee83)")
 st.markdown("Полные версии статей в формате Jupyter Notebook: [https://medsv.github.io/dzen/](https://medsv.github.io/dzen/)")
-
-show_footer()

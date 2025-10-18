@@ -12,7 +12,7 @@ st.title("Расчёт плотности сухого воздуха")
 st.markdown("Определение плотности сухого воздуха при t = [-100; 1000] °С,  p = [0,1; 20] МПа")
 
 t: float = st.number_input("Температура, °С", value=20., step=1., min_value=-100., max_value=1000., key ="t", width = 200)
-p: float = st.number_input("Давление, Па", value=101325.0, step=1., min_value=100000., max_value=20e6, key ="p", width = 200)
+p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=100000., max_value=20e6, key ="p", width = 200)
 if st.button("Рассчитать"):
     try:
         dens, z = calc_dryair_dens(t, p)
@@ -30,4 +30,4 @@ with st.expander("Дополнительно"):
     st.markdown("[Таблица](https://medsv.github.io/dzen/0001/Плотность_сухого_воздуха.html) Зависимость плотности сухого воздуха от его температуры " \
     "при различных значениях абсолютного давления")
 
-show_footer()
+#show_footer()
