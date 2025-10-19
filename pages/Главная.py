@@ -3,8 +3,6 @@ import streamlit as st
 # Настройка страницы
 st.set_page_config(
     page_title="Инженерные расчёты онлайн",
-    page_icon="💻",
-    layout="centered" # wide
 )
 
 

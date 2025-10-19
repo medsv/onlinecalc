@@ -3,8 +3,6 @@ from common.print_result import print_result
 from libs.wsprops.region2 import Region2
 st.set_page_config(
     page_title="Расчёт свойств перегретого пара",
-    page_icon="💻",
-    layout="centered"
 )
 st.title("Расчёт свойств перегретого пара")
 #st.markdown("Допускаемые значения величин: t = [0; 350] °С,  p = [611,213 Па; 100 МПа]")

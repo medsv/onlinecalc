@@ -4,8 +4,6 @@ from common.print_result import print_result
 
 st.set_page_config(
     page_title="Расчёт кавитационного запаса",
-    page_icon="💻",
-    layout="centered"
 )
 
 st.title("Расчёт кавитационного запаса")

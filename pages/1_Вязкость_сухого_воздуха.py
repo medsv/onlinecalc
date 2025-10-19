@@ -4,8 +4,6 @@ from libs.calcdryairvisc import calc_dryair_visc
 from common.print_result import print_result
 st.set_page_config(
     page_title="Расчёт вязкости сухого воздуха",
-    page_icon="💻",
-    layout="centered"
 )
 # Заголовок страницы
 st.title("Расчёт вязкости сухого воздуха")
