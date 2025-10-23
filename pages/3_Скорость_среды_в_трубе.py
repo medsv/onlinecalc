@@ -8,7 +8,7 @@ st.set_page_config(
 
 
 st.title("Расчёт скорости среды в трубе")
-d: float = st.number_input("Внутр. диаметр трубы, мм", value=85., step=1., min_value=6., max_value=5000., key ="d", width = 175)
+d: float = st.number_input("Внутр. диаметр трубы, мм", value=85., step=1., min_value=6., max_value=5000., key ="d", width = 178)
 
 WIDTH: int = 310
 COLS_SIZE = [3, 2]
@@ -27,12 +27,12 @@ with col2:
 if flow_dim == "т/ч" or flow_dim == "кг/с":
     dens: float = st.number_input("Плотность среды, кг/м3", value=1000., step=1., min_value=0.0001, max_value=5000., key ="dens", width = 175)
 if st.button("Рассчитать"):
-    if flow_dim == "м3/ч": k: float = 1. / 3600
-    elif flow_dim == "м3/с": k: float = 1.
-    elif flow_dim == "л/мин": k: float = 1. / 1000 / 60
-    elif flow_dim == "л/с": k: float = 1. / 1000
-    elif flow_dim == "т/ч": k: float = 1000. / dens / 3600
-    elif flow_dim == "кг/с": k: float = 1. / dens
+    k: float = 1.
+    if flow_dim == "м3/ч": k = 1. / 3600
+    elif flow_dim == "л/мин": k = 1. / 1000 / 60
+    elif flow_dim == "л/с": k = 1. / 1000
+    elif flow_dim == "т/ч": k = 1000. / dens / 3600
+    elif flow_dim == "кг/с": k = 1. / dens
     Q *= k
     F: float = pi * d * d / 4 / 1e6  # площадь сечения трубы, м2 
     v: float = Q / F  # скорость среды
