@@ -6,8 +6,10 @@ st.set_page_config(
     page_title="Расчёт свойств перегретого пара",
 )
 st.title("Расчёт свойств перегретого пара")
-#st.markdown("Допускаемые значения величин: t = [0; 350] °С,  p = [611,213 Па; 100 МПа]")
-t: float = st.number_input("Температура, °С", value=150., step=1., min_value=0., max_value= 800., key ="t", width = 200)
+st.markdown("Допускаемые значения величин: t = [0; 800] °С,  p = [611,213 Па; 100 МПа]")
+with st.expander("Расчётная область - область 2"):
+    st.image("img/Области_IAPWS-IF97.png")
+t: float = st.number_input("Температура, °С", value=150., step=1., min_value=0., max_value= 800., key ="t", width = 178)
 #p: float = st.number_input("Абсолютное давление, Па", value=23.5e6, step=1e3, min_value=0., max_value=100.e6, key ="p", width = 200)
 WIDTH: int = 310
 COLS_SIZE = [3, 2]
@@ -38,10 +40,10 @@ if st.button("Рассчитать"):
             ts = None; ps = None  # для того, чтобы в результате расчётов выводилось none
             props = steam.props_tp(t,p)
             dens: float = 1. / props['v']            
-            if p <= 22.064e6:
-                ts: float = steam.sc.t_p(p)
-            if t <= 647.096 - 273.15:
+            if 0 <= t <= 647.096 - 273.15:
                 ps: float = steam.sc.p_t(t)
+            if 611.212677 <= p <= 22.064e6: 
+                ts: float = steam.sc.t_p(p)
             dvisc: float = calc_ws_dvisc(t, dens)
             kvisc: float = dvisc / dens            
             data = {"Температура пара, °С": t, "Давление пара, Па": p, "Плотность пара, кг/м3": dens, 

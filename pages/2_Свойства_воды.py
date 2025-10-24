@@ -6,7 +6,11 @@ st.set_page_config(
     page_title="Расчёт свойств воды",
 )
 st.title("Расчёт свойств воды")
-st.markdown("Допускаемые значения величин: t = [0; 350] °С,  p = [611,213 Па; 100 МПа]")
+st.markdown("Допустимые значения входных параметров: t = [0; 350] °С,  p = [611,213 Па; 100 МПа].")
+with st.expander("Расчётная область - область 1"):
+    st.image("img/Области_IAPWS-IF97.png")
+
+
 t: float = st.number_input("Температура, °С", value=20., step=1., min_value=0., max_value= 350., key ="t", width = 178)
 #p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=611.213, max_value=100e6, key ="p", width = 200)
 
@@ -42,10 +46,13 @@ if st.button("Рассчитать"):
             st.error(mes, icon="⚠️")
         else:
         #try:
+            ts = None; ps = None  # для того, чтобы в результате расчётов выводилось none
             props = water.props_tp(t,p)
             dens: float = 1. / props['v']
-            ps: float = water.sc.p_t(t)
-            ts: float = water.sc.t_p(p)
+            if 0 <= t <= 647.096 - 273.15:
+                ps: float = water.sc.p_t(t)
+            if 611.212677 <= p <= 22.064e6: 
+                ts: float = water.sc.t_p(p)
             dvisc: float = calc_ws_dvisc(t, dens)
             kvisc: float = dvisc / dens
             data = {"Температура воды, °С": t, "Давление воды, Па": p, "Плотность воды, кг/м3": dens, 

@@ -72,7 +72,7 @@ WIDTH: int = 310
 COLS_SIZE = [4, 5]
 # Заголовок страницы
 st.title("Расчёт параметров влажного воздуха")
-st.markdown("Диапазон допустимых температур от -100 °С до +200 °С.")
+st.markdown("Допустимые значения входных параметров: t= [-100; +200] °С.")
 
 # Создаем контейнер с колонками
 col1, col2  = st.columns(COLS_SIZE, vertical_alignment="center", width = WIDTH)

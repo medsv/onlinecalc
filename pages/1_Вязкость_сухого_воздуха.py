@@ -7,7 +7,7 @@ st.set_page_config(
 )
 # Заголовок страницы
 st.title("Расчёт вязкости сухого воздуха")
-st.markdown("Определение вязкости сухого воздуха при t = [-100; 1000] °С,  p = [0,1; 20] МПа")
+st.markdown("Допустимые значения входных параметров: t = [-100; 1000] °С,  p = [0,1; 20] МПа.")
 
 t: float = st.number_input("Температура, °С", value=20., step=1., min_value=-100., max_value=1000., key ="t", width = 200)
 p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=100000., max_value=20e6, key ="p", width = 200)
