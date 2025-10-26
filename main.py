@@ -14,7 +14,8 @@ pg = st.navigation(
                        st.Page("pages/1_Плотность_сухого_воздуха.py"),
                        st.Page("pages/1_Вязкость_сухого_воздуха.py")],
             "Вода/пар": [st.Page("pages/2_Свойства_воды.py"), 
-                         st.Page("pages/2_Свойства_перегретого_пара.py")],       
+                         st.Page("pages/2_Свойства_перегретого_пара.py"),
+                         st.Page("pages/2_Температура_(давление)_кипения_воды.py")],       
             "Гидравлика": [st.Page("pages/3_Скорость_среды_в_трубе.py"),
                            st.Page("pages/3_Кавитационный_запас.py")]
             
@@ -22,3 +23,4 @@ pg = st.navigation(
 )
 pg.run()
 show_footer()   
+

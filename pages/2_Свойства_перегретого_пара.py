@@ -6,7 +6,7 @@ st.set_page_config(
     page_title="Расчёт свойств перегретого пара",
 )
 st.title("Расчёт свойств перегретого пара")
-st.markdown("Допускаемые значения величин: t = [0; 800] °С,  p = [611,213 Па; 100 МПа]")
+st.markdown("Допустимые значения входных параметров: t = [0; 800] °С,  p = [611,213 Па; 100 МПа]")
 with st.expander("Расчётная область - область 2"):
     st.image("img/Области_IAPWS-IF97.png")
 t: float = st.number_input("Температура, °С", value=150., step=1., min_value=0., max_value= 800., key ="t", width = 178)

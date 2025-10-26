@@ -1,5 +1,5 @@
 import streamlit as st
-from libs.wetairprops import calc_d, calc_t_wb, calc_t_dp_d, calc_dens, calc_p_s, calc_I, calc_RH_d
+from libs.wetairprops import calc_d, calc_t_wb, calc_t_dp_d, calc_dens, calc_p_s, calc_I, calc_RH_d, t_min, t_max, p_min, p_max
 from common.footer import show_footer
 from common.print_result import print_result
 
@@ -72,7 +72,7 @@ WIDTH: int = 310
 COLS_SIZE = [4, 5]
 # Заголовок страницы
 st.title("Расчёт параметров влажного воздуха")
-st.markdown("Допустимые значения входных параметров: t= [-100; +200] °С.")
+st.markdown(f"Допустимые значения входных параметров: t= [-100; +200] °С.")
 
 # Создаем контейнер с колонками
 col1, col2  = st.columns(COLS_SIZE, vertical_alignment="center", width = WIDTH)
