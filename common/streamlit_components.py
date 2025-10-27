@@ -11,7 +11,7 @@ def create_unit_input(
     key: str, 
     value: float = 0.0,
     step: float = 1.,
-    unit: str = None,
+    unit: str = "",
 ) -> tuple[float, str]:
     """
     Создает унифицированный элемент ввода с выбором единиц измерения
@@ -48,7 +48,7 @@ def create_unit_input(
             key=f"{key}_unit",
             width = 150
             #label_visibility="collapsed"
-        )
+        ) # type: ignore
     
     return value, unit
 

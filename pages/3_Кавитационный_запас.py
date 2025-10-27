@@ -28,7 +28,7 @@ if st.button("Рассчитать"):
         st.error(mes, icon="⚠️")
     else:
         try:
-            props = water.props_tp(t,p)
+            props: dict[str, float] = water.props_tp(t,p) # type: ignore
             ps: float = water.sc.p_t(t)
             NPSH: float = H + (p - ps) * props["v"] / 9.81 - dH
             #data={"Кавитационный запас (NPSH), м": NPSH}

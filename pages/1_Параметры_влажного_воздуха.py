@@ -92,7 +92,7 @@ with col1:
         on_change=update_rh_d_params
         )
 with col2:
-    RH_d = st.number_input(
+    RH_d: float = st.number_input(
         "Значение параметра влажности",
         label_visibility="collapsed",
         value=st.session_state.get("rh_d_value"),
@@ -101,7 +101,7 @@ with col2:
         format = st.session_state.get("rh_d_format"),
         step=st.session_state.get("rh_d_step"),
         key="RH_d"
-        )
+        ) # type: ignore
 
 col1, col2  = st.columns(COLS_SIZE, vertical_alignment="center", width = WIDTH)
 with col1:  
