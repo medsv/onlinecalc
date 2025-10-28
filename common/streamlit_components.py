@@ -42,7 +42,7 @@ def create_unit_input(
     
     with col2:
         unit = st.selectbox(
-            label="",
+            label=" ",
             options=available_units,
             index=available_units.index(unit),
             key=f"{key}_unit",
