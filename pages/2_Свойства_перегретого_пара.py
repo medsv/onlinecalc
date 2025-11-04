@@ -1,7 +1,7 @@
 import streamlit as st
 from common.print_result import print_result
 from libs.wsprops.region2 import Region2
-from libs.calcwsdvisc import calc_ws_dvisc 
+from libs.calcwsdvisc import calc_ws_dvisc
 st.set_page_config(
     page_title="Расчёт свойств перегретого пара",
 )
@@ -37,13 +37,17 @@ if st.button("Рассчитать"):
         st.error("Сочетание введённых значений температуры и давления находится вне расчётной области.", icon="⚠️")
     else:
         try:
-            ts = None; ps = None  # для того, чтобы в результате расчётов выводилось none
-            props = steam.props_tp(t,p)
-            dens: float = 1. / props['v']            
+            ts: None | float = None; ps: None | float = None  # для того, чтобы в результате расчётов выводилось none
+            props = steam.props_tp(t, p)
+            # Validate that props['v'] exists and is not zero before division
+            v = props.get('v')
+            if v is None or v == 0:
+                raise Exception("Не удалось вычислить удельный объем пара")
+            dens: float = 1. / v
             if 0 <= t <= 647.096 - 273.15:
-                ps: float = steam.sc.p_t(t)
-            if 611.212677 <= p <= 22.064e6: 
-                ts: float = steam.sc.t_p(p)
+                ps = steam.sc.p_t(t)
+            if 611.212677 <= p <= 22.064e6:
+                ts = steam.sc.t_p(p)
             dvisc: float = calc_ws_dvisc(t, dens)
             kvisc: float = dvisc / dens            
             data = {"Температура пара, °С": t, "Давление пара, Па": p, "Плотность пара, кг/м3": dens, 

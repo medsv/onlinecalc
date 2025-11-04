@@ -4,7 +4,7 @@ from libs.wsprops import SaturationCurve as SC
 #from common.units_manager import UnitManager
 from common.streamlit_components import create_unit_input, get_si_value
 from common.print_result import print_result
-st.title("Определение температуры / давления кипения воды")
+st.title("Параметры кипящей воды")
 sc = SC()
 input_type = st.radio(
     "Выберите способ расчёта:",
@@ -14,7 +14,7 @@ input_type = st.radio(
 if input_type == "По давлению":
     st.markdown(f"Допустимые значения входных параметров: p = [{sc.p_min}; {sc.p_max}] Па".replace(".", ","))
     value, unit = create_unit_input(
-        "Давление",
+        "Абсолютное давление",
         "pressure",
         "p",
         101325.,

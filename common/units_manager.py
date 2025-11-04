@@ -54,7 +54,11 @@ class UnitManager:
                 "кДж/кг": lambda x: x * 1000,
                 "Дж/кг": lambda x: x,
                 "ккал/кг": lambda x: x * 4186.8,
-            }
+            },
+            "percent": {
+                "%": lambda x: x / 100.,
+                "Доли": lambda x: x,                
+            },
         }
         
         # Создаем объединенную категорию flow

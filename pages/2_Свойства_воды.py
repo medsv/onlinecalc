@@ -1,7 +1,7 @@
 import streamlit as st
 from common.print_result import print_result
 from libs.wsprops.region1 import Region1
-from libs.calcwsdvisc import calc_ws_dvisc 
+from libs.calcwsdvisc import calc_ws_dvisc
 st.set_page_config(
     page_title="Расчёт свойств воды",
 )
@@ -42,17 +42,21 @@ if st.button("Рассчитать"):
         if not water.Tp_in(t + 273.15, p):
             t_cor = water.sc.t_p(p)
             p_cor = water.sc.p_t(t)
-            mes = f"Сочетание введённых значений температуры и давления соответствует пару. Для воды либо давление должно быть выше {p_cor} Па, либо температура должна быть ниже {t_cor} °С."
+            mes: str = f"Сочетание введённых значений температуры и давления соответствует пару. Для воды либо давление должно быть выше {p_cor} Па, либо температура должна быть ниже {t_cor} °С."
             st.error(mes, icon="⚠️")
         else:
         #try:
-            ts = None; ps = None  # для того, чтобы в результате расчётов выводилось none
-            props = water.props_tp(t,p)
-            dens: float = 1. / props['v']
+            ts: None | float = None; ps: None | float = None  # для того, чтобы в результате расчётов выводилось none
+            props = water.props_tp(t, p)
+            # Validate that props['v'] exists and is not zero before division
+            v: None | float = props.get('v')
+            if v is None or v == 0.:
+                raise Exception("Не удалось вычислить удельный объем воды")
+            dens: float = 1. / v
             if 0 <= t <= 647.096 - 273.15:
-                ps: float = water.sc.p_t(t)
-            if 611.212677 <= p <= 22.064e6: 
-                ts: float = water.sc.t_p(p)
+                ps = water.sc.p_t(t)
+            if 611.212677 <= p <= 22.064e6:
+                ts = water.sc.t_p(p)
             dvisc: float = calc_ws_dvisc(t, dens)
             kvisc: float = dvisc / dens
             data = {"Температура воды, °С": t, "Давление воды, Па": p, "Плотность воды, кг/м3": dens, 
