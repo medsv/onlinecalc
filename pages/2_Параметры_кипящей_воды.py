@@ -1,6 +1,6 @@
 # boiling_calculator.py
 import streamlit as st
-from libs.wsprops import SaturationCurve as SC
+from libs.wsprops import SaturationCurve as SC, Region4
 #from common.units_manager import UnitManager
 from common.streamlit_components import create_unit_input, get_si_value
 from common.print_result import print_result
@@ -38,8 +38,11 @@ if st.button("Рассчитать"):
             t: float = sc.t_p(p)
         else:
             t: float = get_si_value(value, unit, "temperature")
-            p: float = sc.p_t(t)    
-        data = {"Температура кипения воды, °С": t, "Давление кипения воды, Па": p}
+            p: float = sc.p_t(t)
+        r4 = Region4()
+        dh: float = r4.dh_p(p)  # удельная скрытая теплота парообразования
+        data = {"Температура кипения воды, °С": t, "Давление кипения воды, Па": p, 
+                "Удельная скрытая теплота парообразования, Дж/кг": dh}
         print_result(data)
     except Exception as e:
         st.error(f"{str(e)}", icon="⚠️")

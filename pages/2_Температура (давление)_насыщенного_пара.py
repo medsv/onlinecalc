@@ -4,7 +4,7 @@ from libs.wetairprops import calc_p_s, calc_t_s, p_min, p_max, t_min, t_max
 #from common.units_manager import UnitManager
 from common.streamlit_components import create_unit_input, get_si_value
 from common.print_result import print_result
-st.title("Определение температуры / давления насыщенного водяного пара")
+st.title("Температура / давление насыщенного водяного пара")
 input_type = st.radio(
     "Выберите способ расчёта:",
     ["По давлению", "По температуре"],
@@ -37,7 +37,7 @@ if st.button("Рассчитать"):
             t: float = calc_t_s(p)
         else:
             t: float = get_si_value(value, unit, "temperature")
-            p: float = calc_p_s(t)    
+            p: float = calc_p_s(t)
         data = {"Давление насыщенного водяного пара, Па": p, "Температура насыщения (точки росы), °С": t}
         print_result(data)
     except Exception as e:

@@ -37,7 +37,7 @@ class ParamsIn:
          скорость звука, м/с
          степень сухости влажного воздуха (-1 для воды, 2 для перегретого пара)
          """
-        self.props: dict[str, None | float] = {
+        self.props: dict[str, float | None] = {
             'T': None,
             'p': None,
             'h': None,
