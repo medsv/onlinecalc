@@ -36,11 +36,11 @@ workflows:
             docker push cr.yandex/$REGISTRY_ID/streamlit-app:latest
 
             # Создаём или обновляем контейнер в Serverless Containers
-            yc serverless container create-revision \
-              --container-name streamlit-app \
-              --image cr.yandex/$REGISTRY_ID/streamlit-app:latest \
-              --cores 1 \
-              --memory 1G \
-              --execution-timeout 60s \
-              --service-account-id ${{ tokens.YC_CONNECTION.service_account_id }} \
+            yc serverless container create-revision 
+              --container-name streamlit-app 
+              --image cr.yandex/$REGISTRY_ID/streamlit-app:latest 
+              --cores 1 
+              --memory 1G 
+              --execution-timeout 60s 
+              --service-account-id ${{ tokens.YC_CONNECTION.service_account_id }} 
               --concurrent-requests 1
