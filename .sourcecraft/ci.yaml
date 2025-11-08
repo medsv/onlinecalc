@@ -20,6 +20,7 @@ workflows:
               YC_SA_ID: ${{ tokens.YC_CONNECTION.service_account_id }}
             image: cr.yandex/sourcecraft/yc-iam:latest
       - name: build-and-deploy
+        needs: [get-iam-token]
         cubes:
           - name: install-tools
             env:
