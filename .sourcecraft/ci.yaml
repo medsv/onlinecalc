@@ -25,10 +25,7 @@ workflows:
           YC_FOLDER_ID: ${{ tokens.YC_CONNECTION.folder_id }}
           YC_IAM_TOKEN: ${{ cubes.get-token.outputs.IAM_TOKEN }}
           REGISTRY_ID: crpf3qn8fsblqtbcjnea
-        image: cr.yandex/sourcecraft/yc-cli:latest
-        script:
-          - yc config set folder-id $YC_FOLDER_ID
-          - yc config set token $YC_IAM_TOKEN
-          - docker build -t cr.yandex/$REGISTRY_ID/streamlit-app:latest .
-          - docker push cr.yandex/$REGISTRY_ID/streamlit-app:latest
-          - yc serverless container create-revision --container-name streamlit-app --image cr.yandex/$REGISTRY_ID/streamlit-app:latest --cores 1 --memory 1G --execution-timeout 60s --service-account-id ${{ tokens.YC_CONNECTION.service_account_id }} --concurrent-requests 1
+        image:
+          name: cr.yandex/sourcecraft/yc-cli:latest
+          entrypoint: ""
+          args: ["bash", "-c", "yc config set folder-id $YC_FOLDER_ID && yc config set token $YC_IAM_TOKEN && docker build -t cr.yandex/$REGISTRY_ID/streamlit-app:latest . && docker push cr.yandex/$REGISTRY_ID/streamlit-app:latest && yc serverless container create-revision --container-name streamlit-app --image cr.yandex/$REGISTRY_ID/streamlit-app:latest --cores 1 --memory 1G --execution-timeout 60s --service-account-id ${{ tokens.YC_CONNECTION.service_account_id }} --concurrent-requests 1"]
