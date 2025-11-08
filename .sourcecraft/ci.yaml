@@ -6,7 +6,7 @@ on:
 
 tokens:
   YC_CONNECTION:
-    service_connection: yc-serverless
+    service_connection: default-service-connection
     scope: org
 
 workflows:
