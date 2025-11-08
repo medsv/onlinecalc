@@ -1,46 +1,4 @@
 on:
   push:
     branches:
-      - main  # Деплой при пуше в ветку main
-
-tokens:
-  YC_CONNECTION:  # Имя токена (можно любое)
-    service_connection: yc-serverless  # Ваше подключение
-    scope: org
-
-workflows:
-  deploy-streamlit:
-    tasks:
-      - name: Get IAM Token
-        cubes:
-          - name: get-token
-            env:
-              ID_TOKEN: ${{ tokens.YC_CONNECTION.id_token }}
-              YC_SA_ID: ${{ tokens.YC_CONNECTION.service_account_id }}
-            image: cr.yandex/sourcecraft/yc-iam:latest
-
-      - name: Build and Deploy to Serverless Containers
-        env:
-          YC_FOLDER_ID: ${{ tokens.YC_CONNECTION.folder_id }}
-          YC_IAM_TOKEN: ${{ cubes.get-token.outputs.IAM_TOKEN }}
-          REGISTRY_ID: crpf3qn8fsblqtbcjnea  # Ваш ID реестра (из Container Registry)
-        image: cr.yandex/sourcecraft/yc-cli:latest
-        script:
-          - |
-            # Настраиваем CLI
-            yc config set folder-id $YC_FOLDER_ID
-            yc config set token $YC_IAM_TOKEN
-
-            # Собираем Docker-образ и загружаем в Container Registry
-            docker build -t cr.yandex/$REGISTRY_ID/streamlit-app:latest .
-            docker push cr.yandex/$REGISTRY_ID/streamlit-app:latest
-
-            # Создаём или обновляем контейнер в Serverless Containers
-            yc serverless container create-revision 
-              --container-name streamlit-app 
-              --image cr.yandex/$REGISTRY_ID/streamlit-app:latest 
-              --cores 1 
-              --memory 1G 
-              --execution-timeout 60s 
-              --service-account-id ${{ tokens.YC_CONNECTION.service_account_id }} 
-              --concurrent-requests 1
+      - main
