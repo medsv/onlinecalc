@@ -1,0 +1,11 @@
+dev/
+.git/
+.venv/
+.sourcecraft/
+.gitignore
+README.md
+*.log
+__pycache__/
+*.pyc
+.devcontatner
+.vscode
