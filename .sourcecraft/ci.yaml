@@ -12,7 +12,7 @@ tokens:
 workflows:
   deploy-streamlit:
     tasks:
-      - name: Get IAM Token
+      - name: get-iam-token
         cubes:
           - name: get-token
             env:
@@ -20,7 +20,7 @@ workflows:
               YC_SA_ID: ${{ tokens.YC_CONNECTION.service_account_id }}
             image: cr.yandex/sourcecraft/yc-iam:latest
 
-      - name: Build and Deploy to Serverless Containers
+      - name: build-and-deploy
         env:
           YC_FOLDER_ID: ${{ tokens.YC_CONNECTION.folder_id }}
           YC_IAM_TOKEN: ${{ cubes.get-token.outputs.IAM_TOKEN }}
