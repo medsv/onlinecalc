@@ -15,10 +15,7 @@ COPY requirements.txt .
 
 # Устанавливаем системные зависимости для SciPy и очищаем кэш
 RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
-    libblas-dev \
-    liblapack-dev \
+    libblas3 liblapack3 \
     && rm -rf /var/lib/apt/lists/* \
     && pip install --no-cache-dir -r requirements.txt
 
