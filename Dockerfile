@@ -42,3 +42,5 @@ gatherUsageStats = false
 
 # Запускаем приложение
 CMD ["streamlit", "run", "main.py", "--server.port=8080", "--server.address=0.0.0.0", "--server.headless=true"]
+
+# Исправлены ошибки синтаксиса в RUN командах и экранировании кавычек
