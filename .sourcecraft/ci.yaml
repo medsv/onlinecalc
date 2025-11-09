@@ -67,4 +67,4 @@ workflows:
                     echo "Container $YC_SERVERLESS_CONTAINER_NAME already exists"
                 fi
                 
-                yc serverless container revision deploy --container-name $YC_SERVERLESS_CONTAINER_NAME --image cr.yandex/$REGISTRY_ID/$IMAGE_NAME:latest --cores 1 --memory 1G --execution-timeout 60s --service-account-id $YC_SERVICE_ACCOUNT_ID
+                yc serverless container revision deploy --container-name $YC_SERVERLESS_CONTAINER_NAME --image cr.yandex/$REGISTRY_ID/$IMAGE_NAME:latest --cores 1 --memory 1G --execution-timeout 60s --service-account-id $YC_SERVICE_ACCOUNT_ID --command streamlit --args "run,main.py,--server.port=8080,--server.address=0.0.0.0,--server.headless=true"
