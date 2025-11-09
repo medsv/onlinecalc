@@ -1,9 +1,3 @@
-on:
-  push:
-    - workflows: [deploy-streamlit]
-      filter:
-        branches: [main]
-
 tokens:
   SERVICE_CONNECTION:
     service_connection: default-service-connection
