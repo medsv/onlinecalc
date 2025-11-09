@@ -4,19 +4,73 @@ on:
       filter:
         branches: [main]
 
+tokens:
+  SERVICE_CONNECTION:
+    service_connection: default-service-connection
+    scope: org
+
 workflows:
   deploy-streamlit:
     tasks:
       - name: deploy-to-serverless
+        env:
+          REGISTRY_ID: crp27cduk82ck5hf496e
+          IMAGE_NAME: streamlit-app
+          YC_SERVERLESS_CONTAINER_NAME: streamlit-app
+          YC_SERVICE_ACCOUNT_ID: ${{ tokens.SERVICE_CONNECTION.service_account_id }}
         cubes:
-          - name: deploy
+          # Return IAM-token through outputs.IAM_TOKEN
+          - name: get-iam-token
             env:
-              YC_SERVICE_ACCOUNT_KEY: ${{ secrets.YC_SERVICE_ACCOUNT_KEY }}
-              REGISTRY_ID: crp27cduk82ck5hf496e
-            image: cr.yandex/sourcecraft/yc-cli:latest
+              ID_TOKEN: ${{ tokens.SERVICE_CONNECTION.id_token }}
+              YC_SA_ID: ${{ tokens.SERVICE_CONNECTION.service_account_id }}
+            image: cr.yandex/sourcecraft/yc-iam:latest
+
+          # Example of usage GitHub Actions
+          - name: setup-buildx
+            action: docker/setup-buildx-action@v3.11.1
+
+          - name: login
+            action: docker/login-action@v3.5.0
+            with:
+              registry: cr.yandex
+              username: iam
+              password: ${{ cubes.get-iam-token.outputs.IAM_TOKEN }}
+
+          - name: build-and-push
+            action: docker/build-push-action@v6.18.0
+            with:
+              context: .
+              file: Dockerfile
+              platforms: linux/amd64
+              tags: |
+                cr.yandex/${{env.REGISTRY_ID}}/${{env.IMAGE_NAME}}:latest
+              push: true
+      
+          # Example of usage with Yandex Cloud CLI
+          - name: yc-cli-demo
+            env:  
+              YC_FOLDER_ID: ${{ tokens.SERVICE_CONNECTION.folder_id }}
+              YC_IAM_TOKEN: ${{ cubes.get-iam-token.outputs.IAM_TOKEN }}
+            image: 
+              name: cr.yandex/sourcecraft/yc-cli:latest
+              entrypoint: ""
             script:
-              - echo $YC_SERVICE_ACCOUNT_KEY > key.json
-              - yc config set service-account-key key.json
-              - docker build -t cr.yandex/$REGISTRY_ID/streamlit-app:latest .
-              - docker push cr.yandex/$REGISTRY_ID/streamlit-app:latest
-              - yc serverless container create-revision --container-name streamlit-app --image cr.yandex/$REGISTRY_ID/streamlit-app:latest --cores 1 --memory 1G --execution-timeout 60s --concurrent-requests 1
+              - |
+                yc config set folder-id $YC_FOLDER_ID
+                yc config set token $YC_IAM_TOKEN
+
+                # Check if the serverless container exists
+                if ! yc serverless container get --name $YC_SERVERLESS_CONTAINER_NAME &>/dev/null; then
+                    echo "Container $YC_SERVERLESS_CONTAINER_NAME does not exist. Creating it..."
+                    
+                    yc serverless container create --name $YC_SERVERLESS_CONTAINER_NAME 
+                                                  --folder-id $YC_FOLDER_ID 
+                                                  --description "Streamlit app container"
+                    
+                    echo "Container $YC_SERVERLESS_CONTAINER_NAME created successfully"
+                else
+                    echo "Container $YC_SERVERLESS_CONTAINER_NAME already exists"
+                fi
+                
+                yc serverless container revision deploy --container-name $YC_SERVERLESS_CONTAINER_NAME --image cr.yandex/$REGISTRY_ID/$IMAGE_NAME:latest --cores 1 --memory 1G --execution-timeout 60s --concurrent-requests 1 --service-account-id $YC_SERVICE_ACCOUNT_ID
