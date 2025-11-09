@@ -26,18 +26,16 @@ EXPOSE 8080
 
 # Создаем конфигурационный файл Streamlit
 RUN mkdir -p /root/.streamlit
-RUN bash -c 'echo -e "
-[server]
+RUN echo -e "[server]
 headless = true
 port = 8080
 enableCORS = false
 enableXsrfProtection = false
 
 [browser]
-gatherUsageStats = false
-" > /root/.streamlit/config.toml'
+gatherUsageStats = false" > /root/.streamlit/config.toml
 
 # Запускаем приложение
 CMD ["streamlit", "run", "main.py", "--server.port=8080", "--server.address=0.0.0.0", "--server.headless=true"]
 
-# Исправлены ошибки синтаксиса в RUN командах
+# Исправлены ошибки синтаксиса в RUN командах и создании конфигурационного файла Streamlit
