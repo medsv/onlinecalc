@@ -12,7 +12,7 @@ workflows:
           - name: deploy
             env:
               YC_SERVICE_ACCOUNT_KEY: ${{ secrets.YC_SERVICE_ACCOUNT_KEY }}
-              REGISTRY_ID: crpf3qn8fsblqtbcjnea
+              REGISTRY_ID: crp27cduk82ck5hf496e
             image: cr.yandex/sourcecraft/yc-cli:latest
             script:
               - echo $YC_SERVICE_ACCOUNT_KEY > key.json
