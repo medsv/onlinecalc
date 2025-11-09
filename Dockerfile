@@ -12,10 +12,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Устанавливаем системные зависимости для SciPy и очищаем кэш
-RUN apt-get update 
- && apt-get install -y libblas3 liblapack3 
- && rm -rf /var/lib/apt/lists/* 
- && pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && apt-get install -y libblas3 liblapack3 && rm -rf /var/lib/apt/lists/* && pip install --no-cache-dir -r requirements.txt
 
 # Копируем только нужные папки (сначала редко изменяемые)
 COPY common/ ./common/
@@ -43,4 +40,4 @@ gatherUsageStats = false
 # Запускаем приложение
 CMD ["streamlit", "run", "main.py", "--server.port=8080", "--server.address=0.0.0.0", "--server.headless=true"]
 
-# Исправлены ошибки синтаксиса в RUN командах и экранировании кавычек
+# Исправлены ошибки синтаксиса в RUN командах
