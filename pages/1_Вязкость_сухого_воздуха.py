@@ -2,6 +2,8 @@ import streamlit as st
 #from libs.calcdryairdens import calc_dryair_dens
 from libs.calcdryairvisc import calc_dryair_visc
 from common.print_result import print_result
+from common.streamlit_components import create_unit_input, get_si_value
+
 st.set_page_config(
     page_title="Расчёт вязкости сухого воздуха",
 )
@@ -9,10 +11,31 @@ st.set_page_config(
 st.title("Расчёт вязкости сухого воздуха")
 st.markdown("Допустимые значения входных параметров: t = [-100; 1000] °С,  p = [0,1; 20] МПа.")
 
-t: float = st.number_input("Температура, °С", value=20., step=1., min_value=-100., max_value=1000., key ="t", width = 200)
-p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=100000., max_value=20e6, key ="p", width = 200)
+#t: float = st.number_input("Температура, °С", value=20., step=1., min_value=-100., max_value=1000., key ="t", width = 200)
+#p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=100000., max_value=20e6, key ="p", width = 200)
+
+t_v, t_u = create_unit_input(
+        "Температура",
+        "temperature",
+        "t",
+        20.,
+        1.,
+        "°C"
+        )
+
+p_v, p_u = create_unit_input(
+        "Абсолютное давление",
+        "pressure",
+        "p",
+        101325.0,
+        1.,
+        "Па"
+        )
+
 if st.button("Рассчитать"):
     try:
+        t: float = get_si_value(t_v, t_u, "temperature")
+        p: float = get_si_value(p_v, p_u, "pressure")
         dvisc,  dens = calc_dryair_visc(t, p)
         data ={"Температура сухого воздуха, °С": t, "Давление, Па": p, "Плотность, кг/м3": dens, 
                "Динамическая вязкость, Па*с": dvisc, "Кинематическая вязкость, м2/с": dvisc / dens}

@@ -2,6 +2,8 @@ import streamlit as st
 from common.print_result import print_result
 from libs.wsprops.region1 import Region1
 from libs.calcwsdvisc import calc_ws_dvisc
+from common.streamlit_components import create_unit_input, get_si_value
+
 st.set_page_config(
     page_title="Расчёт свойств воды",
 )
@@ -10,34 +12,29 @@ st.markdown("Допустимые значения входных парамет
 with st.expander("Расчётная область - область 1"):
     st.image("img/Области_IAPWS-IF97.png")
 
-
-t: float = st.number_input("Температура, °С", value=20., step=1., min_value=0., max_value= 350., key ="t", width = 178)
-#p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=611.213, max_value=100e6, key ="p", width = 200)
-
-
-WIDTH: int = 310
-COLS_SIZE = [3, 2]
-col1, col2  = st.columns(COLS_SIZE, vertical_alignment="center", width = WIDTH)
-with col1:  
-    p: float = st.number_input("Абсолютное давление", value=101325.0, step=1., min_value=0., key ="p", width = 200)
-with col2:
-    flow_dim: str = st.selectbox(
-        " ",
-        options=["Па", "кПа", "кгс/см2", "бар", "МПа"],
-        width=150,
-        key="p_dim",
+t_v, t_u = create_unit_input(
+        "Температура",
+        "temperature",
+        "t",
+        20.,
+        1.,
+        "°C"
         )
 
+p_v, p_u = create_unit_input(
+        "Абсолютное давление",
+        "pressure",
+        "p",
+        101325.0,
+        1.,
+        "Па"
+        )
 
 water = Region1()
 if st.button("Рассчитать"):
-    k: float = 1.
-    if flow_dim == "кПа": k = 1e3
-    elif flow_dim == "кгс/см2": k = 98066.5
-    elif flow_dim == "бар": k = 1e5
-    elif flow_dim == "МПа": k = 1e6
-    p *= k
     try:
+        t: float = get_si_value(t_v, t_u, "temperature")
+        p: float = get_si_value(p_v, p_u, "pressure")
         if p > 100e6: raise Exception("Абсолютное давление должно быть не больше 100 МПа")
         if not water.Tp_in(t + 273.15, p):
             t_cor = water.sc.t_p(p)

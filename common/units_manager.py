@@ -24,7 +24,7 @@ class UnitManager:
             },
             "temperature": {
                 "°C": lambda x: x,
-                "K": lambda x: x + 273.15,
+                "K": lambda x: x - 273.15,
                 "°F": lambda x: (x - 32) * 5/9,
             },
             "volume_flow": {

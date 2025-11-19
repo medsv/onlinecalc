@@ -43,6 +43,8 @@ x_value, x_unit = create_unit_input(
 if st.button("Рассчитать"):
     try:
         x: float = get_si_value(x_value, x_unit, "percent")
+        if x < 0. or x > 1.:
+            raise ValueError("Допустимое значение степени сухости - [0; 1] ([0%; 100%])")
         if input_type == "По давлению":
             p: float = get_si_value(value, unit, "pressure")
             t = r4.sc.t_p(p)
