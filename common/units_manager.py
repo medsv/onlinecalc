@@ -45,10 +45,9 @@ class UnitManager:
                 "т/м³": lambda x: x * 1000,
             },
             "length": {
-                "м": lambda x: x,
-                "см": lambda x: x * 0.01,
                 "мм": lambda x: x * 0.001,
-                "км": lambda x: x * 1000,
+                "см": lambda x: x * 0.01,
+                "м": lambda x: x,
             },
             "enthalpy": {
                 "кДж/кг": lambda x: x * 1000,
@@ -61,7 +60,7 @@ class UnitManager:
             },
         }
         
-        # Создаем объединенную категорию flow
+        # Создаем объединенную категорию flow (объёмный и массовый расходы)
         self._base_units["flow"] = {**self._base_units["volume_flow"], **self._base_units["mass_flow"]}
         
         # Кэш для быстрого доступа

@@ -1,5 +1,6 @@
 import streamlit as st
 from libs.wsprops.region1 import Region1
+from common.streamlit_components import create_unit_input, get_si_value
 from common.print_result import print_result
 
 st.set_page_config(
@@ -15,19 +16,44 @@ with st.expander("Схема"):
     "H - подпор, разница отметок поверхности воды и оси вала насоса (может принимать отрицательные значения), м;\n\n" \
         "dH - потери давления (напора) в подводящем трубопроводе, м.")
 
-p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=611.213, max_value=100e6, key ="p", width = 200)
-t: float = st.number_input("Температура, °С", value=20., step=1., min_value=0., max_value= 623.15-273.15, key ="t", width = 200)
+p_v, p_u = create_unit_input(
+        "Абсолютное давление",
+        "pressure",
+        "p",
+        101325.0,
+        1.,
+        "Па"
+        )
+
+t_v, t_u = create_unit_input(
+        "Температура",
+        "temperature",
+        "t",
+        20.,
+        1.,
+        "°C"
+        )
+
+
+
+#p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=611.213, max_value=100e6, key ="p", width = 200)
+#t: float = st.number_input("Температура, °С", value=20., step=1., min_value=0., max_value= 623.15-273.15, key ="t", width = 200)
 H: float = st.number_input("Подпор, м", value=0., step=1., min_value=-1000., max_value=1000., key ="H", width = 200)
 dH: float = st.number_input("Потери давления (напора), м", value=0., step=1., min_value=0., max_value=1000., key ="dH", width = 200)
 water = Region1()
 if st.button("Рассчитать"):
-    if not water.Tp_in(t + 273.15, p):
-        t_cor = water.sc.t_p(p)
-        p_cor = water.sc.p_t(t)
-        mes = f"Сочетание введённых значений температуры и давления соответствует пару. Для воды либо давление должно быть выше {p_cor} Па, либо температура должна быть ниже {t_cor} °С."
-        st.error(mes, icon="⚠️")
-    else:
-        try:
+    t: float = get_si_value(t_v, t_u, "temperature")
+    p: float = get_si_value(p_v, p_u, "pressure")
+    try:
+        if not (611.213<=p<=100e6) or not (0<=t<=350):
+            raise ValueError("Допустимые значения входных параметров: t = [0; 350] °С,  p = [611,213 Па; 100 МПа]")
+        if not water.Tp_in(t + 273.15, p):
+            t_cor = water.sc.t_p(p)
+            p_cor = water.sc.p_t(t)
+            mes = f"Сочетание введённых значений температуры и давления соответствует пару. Для воды либо давление должно быть выше {p_cor} Па, либо температура должна быть ниже {t_cor} °С."
+            st.error(mes, icon="⚠️")
+        else:
+        
             props: dict[str, float] = water.props_tp(t,p) # type: ignore
             ps: float = water.sc.p_t(t)
             NPSH: float = H + (p - ps) * props["v"] / 9.81 - dH
@@ -35,9 +61,8 @@ if st.button("Рассчитать"):
             data = {"Давление над поверхностью воды, Па": p, "Температура воды, °С": t, "Подпор, м": H, 
                     "Потери давления (напора), м": dH, "Давление кипения воды, Па": ps, "Плотность воды, кг/м3": 1. / props['v'], "Кавитационный запас (NPSH), м": NPSH}
             print_result(data)
-
-        except Exception as e:
-            st.error(f"{str(e)}", icon="⚠️")
+    except Exception as e:
+        st.error(f"{str(e)}", icon="⚠️")
 
 with st.expander("Дополнительно"):
     st.markdown("[Статья](https://dzen.ru/a/X8Nt8mPVdAQVSm6Z) Расчёт кавитационного запаса")
