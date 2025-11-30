@@ -43,7 +43,7 @@ else:
         category="mass_content",
         key="d",
         value=8.7168,
-        form = "%.4f",
+        form="%.4f",
         step=0.0001,
         unit="г/кг"
         )
