@@ -15,21 +15,21 @@ st.markdown("Допустимые значения входных парамет
 #p: float = st.number_input("Абсолютное давление, Па", value=101325.0, step=1., min_value=100000., max_value=20e6, key ="p", width = 200)
 
 t_v, t_u = create_unit_input(
-        "Температура",
-        "temperature",
-        "t",
-        20.,
-        1.,
-        "°C"
+        label="Температура",
+        category="temperature",
+        key="t",
+        value=20.,
+        step=1.,
+        unit="°C"
         )
 
 p_v, p_u = create_unit_input(
-        "Абсолютное давление",
-        "pressure",
-        "p",
-        101325.0,
-        1.,
-        "Па"
+        label="Абсолютное давление",
+        category="pressure",
+        key="p",
+        value=101325.0,
+        step=1.,
+        unit="Па"
         )
 
 if st.button("Рассчитать"):

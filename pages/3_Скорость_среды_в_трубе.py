@@ -11,32 +11,32 @@ st.set_page_config(
 st.title("Расчёт скорости среды в трубе")
 # d: float = st.number_input("Внутр. диаметр трубы, мм", value=85., step=1., min_value=6., max_value=5000., key ="d", width = 178)
 d_v, d_u = create_unit_input(
-        "Внутр. диаметр трубы",
-        "length",
-        "d",
-        85.0,
-        1.,
-        "мм"
+        label="Внутр. диаметр трубы",
+        category="length",
+        key="d",
+        value=85.0,
+        step=1.,
+        unit="мм"
         )
 d: float = get_si_value(d_v, d_u, "length")
 
 Q_v, Q_u = create_unit_input(
-        "Расход среды",
-        "flow",
-        "Q",
-        50.0,
-        1.,
-        "м³/ч"
+        label="Расход среды",
+        category="flow",
+        key="Q",
+        value=50.0,
+        step=1.,
+        unit="м³/ч"
         )
 Q = get_si_value(Q_v, Q_u, "flow")
 if is_mass_flow(Q_u):
     dens_v, dens_u = create_unit_input(
-        "Плотность среды",
-        "density",
-        "dens",
-        1000.0,
-        1.,
-        "кг/м3"
+        label="Плотность среды",
+        category="density",
+        key="dens",
+        value=1000.0,
+        step=1.,
+        unit="кг/м3"
         )
     dens = get_si_value(dens_v, dens_u, "density")
     Q = Q / dens

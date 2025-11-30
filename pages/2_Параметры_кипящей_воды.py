@@ -14,22 +14,22 @@ input_type = st.radio(
 if input_type == "По давлению":
     st.markdown(f"Допустимые значения входных параметров: p = [{sc.p_min}; {sc.p_max}] Па".replace(".", ","))
     value, unit = create_unit_input(
-        "Абсолютное давление",
-        "pressure",
-        "p",
-        101325.,
-        1.,
-        "Па"
+        label="Абсолютное давление",
+        category="pressure",
+        key="p",
+        value=101325.,
+        step=1.,
+        unit="Па"
         )
 else: # По температуре
     st.markdown(f"Допустимые значения входных параметров: t = [{sc.T_min - 273.15}; {sc.T_max - 273.15}] °С".replace(".", ","))
     value, unit = create_unit_input(
-        "Температура",
-        "temperature",
-        "t",
-        100.,
-        1.,
-        "°C"
+        label="Температура",
+        category="temperature",
+        key="t",
+        value=100.,
+        step=1.,
+        unit="°C"
         )    
 if st.button("Рассчитать"):
     try:

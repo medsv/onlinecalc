@@ -13,21 +13,21 @@ with st.expander("Расчётная область - область 1"):
     st.image("img/Области_IAPWS-IF97.png")
 
 t_v, t_u = create_unit_input(
-        "Температура",
-        "temperature",
-        "t",
-        20.,
-        1.,
-        "°C"
+        label="Температура",
+        category="temperature",
+        key="t",
+        value=20.,
+        step=1.,
+        unit="°C"
         )
 
 p_v, p_u = create_unit_input(
-        "Абсолютное давление",
-        "pressure",
-        "p",
-        101325.0,
-        1.,
-        "Па"
+        label="Абсолютное давление",
+        category="pressure",
+        key="p",
+        value=101325.0,
+        step=1.,
+        unit="Па"
         )
 
 water = Region1()

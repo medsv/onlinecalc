@@ -10,6 +10,7 @@ def create_unit_input(
     category: str, 
     key: str, 
     value: float = 0.0,
+    form: str = "",
     step: float = 1.,
     unit: str = "",
 ) -> tuple[float, str]:
@@ -36,6 +37,7 @@ def create_unit_input(
             label=label,
             value=value,
             key=f"{key}_value",
+            format=form if form != "" else "%.2f",
             step = step,
             width = 200
         )

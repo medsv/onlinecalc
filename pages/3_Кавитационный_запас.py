@@ -17,21 +17,21 @@ with st.expander("Схема"):
         "dH - потери давления (напора) в подводящем трубопроводе, м.")
 
 p_v, p_u = create_unit_input(
-        "Абсолютное давление",
-        "pressure",
-        "p",
-        101325.0,
-        1.,
-        "Па"
+        label="Абсолютное давление",
+        category="pressure",
+        key="p",
+        value=101325.0,
+        step=1.,
+        unit="Па"
         )
 
 t_v, t_u = create_unit_input(
-        "Температура",
-        "temperature",
-        "t",
-        20.,
-        1.,
-        "°C"
+        label="Температура",
+        category="temperature",
+        key="t",
+        value=20.,
+        step=1.,
+        unit="°C"
         )
 
 

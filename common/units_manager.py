@@ -21,6 +21,7 @@ class UnitManager:
                 "бар": lambda x: x * 1e5,
                 "атм": lambda x: x * 101325,
                 "мм.рт.ст.": lambda x: x * 133.322,
+                "psi": lambda x: x * 6894.76,
             },
             "temperature": {
                 "°C": lambda x: x,
@@ -48,6 +49,8 @@ class UnitManager:
                 "мм": lambda x: x * 0.001,
                 "см": lambda x: x * 0.01,
                 "м": lambda x: x,
+                "дюйм": lambda x: x * 0.0254,
+                "фут": lambda x: x * 0.3048,
             },
             "enthalpy": {
                 "кДж/кг": lambda x: x * 1000,
@@ -56,7 +59,12 @@ class UnitManager:
             },
             "percent": {
                 "%": lambda x: x / 100.,
-                "Доли": lambda x: x,                
+                "Доли": lambda x: x,
+            },
+            "mass_content": {
+                "г/кг": lambda x: x,
+                "г/г": lambda x: x * 1000,
+                "кг/кг": lambda x: x * 1000,
             },
         }
         

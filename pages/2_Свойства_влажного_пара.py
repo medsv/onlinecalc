@@ -14,30 +14,30 @@ r4 = Region4()
 if input_type == "По давлению":
     st.markdown(f"Допустимые значения входных параметров: p = [{r4.p_min}; {r4.p_max}] Па".replace(".", ","))
     value, unit = create_unit_input(
-        "Абсолютное давление",
-        "pressure",
-        "p",
-        5000.,
-        1.,
-        "Па"
+        label="Абсолютное давление",
+        category="pressure",
+        key="p",
+        value=5000.,
+        step=1.,
+        unit="Па"
         )
 else: # По температуре
     st.markdown(f"Допустимые значения входных параметров: t = [{r4.T_min - 273.15}; {r4.T_max - 273.15}] °С".replace(".", ","))
     value, unit = create_unit_input(
-        "Температура",
-        "temperature",
-        "t",
-        30.,
-        1.,
-        "°C"
+        label="Температура",
+        category="temperature",
+        key="t",
+        value=30.,
+        step=1.,
+        unit="°C"
         )   
 x_value, x_unit = create_unit_input(
-    "Степень сухости",
-    "percent",
-    "x",
-    50.,
-    1.,
-    "%"
+    label="Степень сухости",
+    category="percent",
+    key="x",
+    value=50.,
+    step=1.,
+    unit="%"
     )
     
 if st.button("Рассчитать"):

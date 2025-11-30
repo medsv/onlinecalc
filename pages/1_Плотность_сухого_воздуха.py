@@ -12,21 +12,21 @@ st.title("Расчёт плотности сухого воздуха")
 st.markdown("Допустимые значения входных параметров: t = [-100; 1000] °С,  p = [0,1; 20] МПа.")
 
 t_v, t_u = create_unit_input(
-        "Температура",
-        "temperature",
-        "t",
-        20.,
-        1.,
-        "°C"
+        label="Температура",
+        category="temperature",
+        key="t",
+        value=20.,
+        step=1.,
+        unit="°C"
         )
 
 p_v, p_u = create_unit_input(
-        "Абсолютное давление",
-        "pressure",
-        "p",
-        101325.0,
-        1.,
-        "Па"
+        label="Абсолютное давление",
+        category="pressure",
+        key="p",
+        value=101325.0,
+        step=1.,
+        unit="Па"
         )
 
 #t: float = st.number_input("Температура, °С", value=20., step=1., min_value=-100., max_value=1000., key ="t", width = 200)
